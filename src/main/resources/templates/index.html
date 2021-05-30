@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+    <div class="container">
+        <br />
+        <a th:href="@{/newEmployee}" class="btn waves-effect waves-light">New employee</a>
+        <h1>Employees List</h1>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Employee First Name</th>
+                    <th>Employee Last Name</th>
+                    <th>Employee Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="employee : ${listEmployees}">
+                    <td th:text="${employee.firstName}"></td>
+                    <td th:text="${employee.lastName}"></td>
+                    <td th:text="${employee.email}"></td>
+                    <td>
+                        <a th:href="@{/showFormForUpdate/{id}(id=${employee.id})}" class="btn waves-effect waves-light">Update</a>
+                        <a th:href="@{/deleteEmployee/{id}(id=${employee.id})}" class="btn waves-effect waves-light">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

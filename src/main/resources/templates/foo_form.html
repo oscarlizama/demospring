@@ -1,0 +1,38 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Foo - New</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Foo</h1>
+        <form action="#" th:action="@{/fooWrapper}" method="post" th:object="${fooListWrapper}">
+            <div class="row">
+                <div class="input-field col s6" id="div-form">
+                    <label for="name">Name</label>
+                    <input placeholder="Name" name="fooList[0].name" id="name" type="text" class="validate" />
+                </div>
+                <a href="#" class="btn" onclick="addInput()">New</a>
+                <button type="submit" class="btn">Agregar</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        var indiceInput = 0;
+        function addInput(){
+            indiceInput = indiceInput + 1;
+            var input = document.createElement("input");
+            input.name = "fooList[" + indiceInput + "].name";
+            input.type = "text";
+            document.getElementById("div-form").append(input);
+        }
+    </script>
+    <!--JavaScript at end of body for optimized loading-->
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

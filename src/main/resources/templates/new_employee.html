@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee - New</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Employee</h1>
+    <form action="#" th:action="@{/saveEmployee}" th:object="${employee}" method="post">
+        <!--<div th:if="${#fields.hasErrors('*')}">
+            <h5>Error al procesar el formulario</h5>
+            <ul>
+                <li th:each="error : ${#fields.errors('*')}" th:text="${error}"></li>
+            </ul>
+        </div>-->
+        <input type="hidden" th:field="*{id}">
+        <div class="row">
+            <div class="input-field col s6">
+                <input placeholder="First Name" id="first_name" type="text" class="validate" th:field="*{firstName}" />
+                <label for="first_name">First Name</label>
+                <span th:if="${#fields.hasErrors('firstName')}" class="helper-text" data-error="wrong" data-success="right">El nombre no es válido</span>
+            </div>
+            <div class="input-field col s6">
+                <input placeholder="Second Name" id="second_name" type="text" class="validate" th:field="*{secondName}" />
+                <label for="first_name">Second Name</label>
+                <span th:if="${#fields.hasErrors('secondName')}" class="helper-text" data-error="wrong" data-success="right">El nombre no es válido</span>
+            </div>
+            <div class="input-field col s6">
+                <input placeholder="First Name" id="last_name" type="text" class="validate" th:field="*{lastName}">
+                <label for="last_name">Last Name</label>
+                <span th:if="${#fields.hasErrors('lastName')}" class="helper-text" data-error="wrong" data-success="right">El apellido no es válido</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input placeholder="Email" id="email" type="email" class="validate" th:field="*{email}" autocomplete="off">
+                <label for="email">Email</label>
+                <span th:if="${#fields.hasErrors('email')}" class="helper-text" data-error="wrong" data-success="right">El email contiene errores</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12" id="div-foo">
+                <input th:value="${#lists.size(employee.fooList)}" hidden id="listSize"/>
+                <th:block th:each="foo, i : ${employee.fooList}">
+                    <input type="hidden" th:field="*{fooList[__${i.index}__].id}">
+                    <input type="text" class="validate" th:field="*{fooList[__${i.index}__].name}" />
+                    <span th:if="${#fields.hasErrors('fooList[' + __${i.index}__ + '].name')}" class="helper-text" data-error="wrong" data-success="right">Error el valor de Foo</span>
+                    <a th:href="@{'/employee/foo/delete/' + ${employee.id} + '/' + ${foo.id}}" class="btn">Delete</a>
+                </th:block>
+            </div>
+            <a href="#" class="btn" onclick="addInput()">New</a>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input placeholder="Fecha de nacimiento" id="fechaNacimiento" type="date" class="validate" th:field="*{fechaNacimiento}" autocomplete="off">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <span th:if="${#fields.hasErrors('fechaNacimiento')}" class="helper-text" data-error="wrong" data-success="right">La fecha ingresada es incorrecta</span>
+            </div>
+            <button class="waves-effect waves-light btn" type="submit">Save</button>
+        </div>
+    </form>
+  </div>
+  <!--JavaScript at end of body for optimized loading-->
+  <script>
+      var indiceInput = parseInt(document.getElementById("listSize").value);
+      function addInput(){
+          var input = document.createElement("input");
+          input.name = "fooList[" + indiceInput + "].name";
+          input.type = "text";
+          input.placeholder = "Foo attributte " + (indiceInput + 1);
+          document.getElementById("div-foo").append(input);
+          indiceInput = indiceInput + 1;
+      }
+  </script>
+  <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
